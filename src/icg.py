@@ -1,16 +1,11 @@
-# file: src/icg.py
-
-from main import tokenize
 import importlib.util
 import os
 
-# --- JALUR SELUNDUPAN: Memaksa Python membaca parser.py lokal ---
 lokasi_file_parser = os.path.join(os.path.dirname(__file__), 'parser.py')
 spec = importlib.util.spec_from_file_location("modul_parser_kita", lokasi_file_parser)
 modul_parser = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(modul_parser)
 Parser = modul_parser.Parser
-# ----------------------------------------------------------------
 
 class IntermediateCodeGenerator:
     def __init__(self):
@@ -55,7 +50,6 @@ class IntermediateCodeGenerator:
                     self.kode_tac.append(f"  {t_ret} = <nilai_return>")
                     self.kode_tac.append(f"  Return {t_ret}")
                     
-                    # Jika ini adalah return di dalam blok IF, tancapkan label L1 di bawahnya
                     if stack_label and len(isi_blok) > 1:
                         label_keluar = stack_label.pop()
                         self.kode_tac.append(f"{label_keluar}:")
@@ -74,7 +68,6 @@ class IntermediateCodeGenerator:
                     t_gen = self.get_temp()
                     self.kode_tac.append(f"  {t_gen} = <perintah_{perintah}>")
 
-            # Tancapkan sisa label jika masih ada yang menggantung
             while stack_label:
                 self.kode_tac.append(f"{stack_label.pop()}:")
 
@@ -83,6 +76,7 @@ class IntermediateCodeGenerator:
         return self.kode_tac
 
 if __name__ == '__main__':
+    from main import tokenize # Dipindah ke sini agar tidak bentrok
     try:
         print("\n" + "="*52)
         print(" ⚙️  TAHAP 4: INTERMEDIATE CODE GENERATOR (TAC)")

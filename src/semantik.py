@@ -1,8 +1,3 @@
-# file: src/semantik.py
-
-from main import tokenize
-
-# --- JALUR SELUNDUPAN: Memaksa Python membaca parser.py lokal ---
 import importlib.util
 import os
 
@@ -11,11 +6,9 @@ spec = importlib.util.spec_from_file_location("modul_parser_kita", lokasi_file_p
 modul_parser = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(modul_parser)
 Parser = modul_parser.Parser
-# ----------------------------------------------------------------
 
 class SemanticAnalyzer:
     def __init__(self):
-        # Kamus perintah yang sah di bahasa TinyC kita
         self.keyword_valid = ['if', 'else', 'return', 'int', 'print']
 
     def analisis_pohon(self, pohon_ast):
@@ -38,6 +31,7 @@ class SemanticAnalyzer:
                     print(f"  ❌ [ERROR] Perintah '{perintah}' tidak valid atau belum dideklarasi!")
 
 if __name__ == '__main__':
+    from main import tokenize # Dipindah ke sini agar tidak bentrok
     try:
         with open('tests/test1.src', 'r') as file:
             kode_sumber = file.read()

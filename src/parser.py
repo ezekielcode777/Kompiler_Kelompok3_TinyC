@@ -1,5 +1,4 @@
 import json
-from main import tokenize
 
 class Parser:
     def __init__(self, tokens):
@@ -15,7 +14,6 @@ class Parser:
         self.pos += 1
 
     def parse_program(self):
-        # Ini adalah akar/batang utama dari pohon kita
         ast = {
             "Tipe_Node": "Program_TinyC",
             "Daftar_Fungsi": []
@@ -23,7 +21,6 @@ class Parser:
         
         while self.pos < len(self.tokens):
             token = self.ambil_token()
-            # Jika menemukan kata 'int', itu artinya awal dari sebuah Fungsi
             if token and token[0] == 'KEYWORD' and token[1] == 'int':
                 ast["Daftar_Fungsi"].append(self.parse_fungsi())
             else:
@@ -32,26 +29,23 @@ class Parser:
         return ast
 
     def parse_fungsi(self):
-        # Ini adalah ranting-ranting pohonnya
         node_fungsi = {
             "Tipe_Node": "Deklarasi_Fungsi",
             "Tipe_Kembalian": "int",
             "Nama_Fungsi": "",
             "Isi_Blok_Kode": []
         }
-        self.maju() # Lewati kata 'int'
+        self.maju() 
 
         token = self.ambil_token()
         if token and token[0] == 'ID':
             node_fungsi["Nama_Fungsi"] = token[1]
             self.maju()
 
-        # Lewati token sampai masuk ke dalam blok kurung kurawal '{'
         while self.ambil_token() and self.ambil_token()[1] != '{':
             self.maju()
-        self.maju() # Lewati '{'
+        self.maju() 
 
-        # Tangkap perintah-perintah penting (if, return, print) di dalam fungsi
         while self.ambil_token() and self.ambil_token()[1] != '}':
             token_isi = self.ambil_token()
             if token_isi[0] == 'KEYWORD':
@@ -60,11 +54,11 @@ class Parser:
                 node_fungsi["Isi_Blok_Kode"].append({"Perintah": "print"})
             self.maju()
 
-        self.maju() # Lewati '}'
+        self.maju() 
         return node_fungsi
 
-# --- Uji Coba Mesin Parser Tahap Akhir ---
 if __name__ == '__main__':
+    from main import tokenize # Dipindah ke sini agar tidak bentrok
     print("=== MEMBANGUN POHON AST TAHAP AKHIR ===")
     try:
         with open('tests/test1.src', 'r') as file:
@@ -76,9 +70,8 @@ if __name__ == '__main__':
             parser = Parser(daftar_token)
             pohon_ast = parser.parse_program()
             
-            # Mencetak pohon ke layar dengan indentasi agar terlihat keren
             print(json.dumps(pohon_ast, indent=4))
-            print("\n[SUKSES] Pohon AST berhasil dibuat! Silakan teman Semantic Analyzer mengambil alih.")
+            print("\n[SUKSES] Pohon AST berhasil dibuat!")
             
     except Exception as e:
         print("Ada error:", e)
