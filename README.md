@@ -3,12 +3,12 @@
 Kompiler sederhana berbasis CLI untuk bahasa **TinyC** yang dilengkapi dengan fitur *Code Generator* (Transpiler ke Python murni).
 
 ## Anggota Kelompok 3:
-1. Yeheskiel Boyke Lumban Gaol (Ketua / Koordinasi, Integrasi & Laporan)
-2. Tri Putra (Scanner / Lexical Analysis)
-3. Dida Aldeaneva (Parser & AST Construction)
-4. Lucky Sitinjak (Semantic Analyzer & Symbol Table)
-5. Muhammad Reza Erlangga (Intermediate Code TAC & Optimasi)
-6. Fathiah Vianata (Tester, Test Cases & Error Handling)
+1. Yeheskiel Boyke Lumban Gaol (Ketua / Koordinasi, menyelesaikan parser dan menampilkan pohon ast utuh)
+2. Tri Putra (semantic analyzer)
+3. Dida Aldeaneva (intermedia code generation)
+4. Lucky Sitinjak (code optimization)
+5. Muhammad Reza Erlangga (code generator)
+6. Fathiah Vianata (leksikal, sintaks, semantik & Error Handling)
 
 ## Struktur Folder
 - `src/` : Kode sumber kompiler (Scanner, Parser, Semantic, ICG, Optimasi, Error Handler, Code Gen)
