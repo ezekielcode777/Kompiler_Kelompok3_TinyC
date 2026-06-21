@@ -96,7 +96,7 @@ def main():
         auditor = CompilerErrorHandler()
         auditor.jalankan_audit_error(kode_sumber, ast)
         if auditor.errors:
-            return # Stop jika konstitusi dilanggar
+            return 
 
         # --- TAHAP 3: SEMANTIK ---
         print("\n--- 4. PROSES SEMANTIC ANALYZER ---")
@@ -119,12 +119,11 @@ def main():
         builder = TargetCodeGenerator()
         output_file = 'dist/hasil_kompilasi.py'
         
-        # Method dari kodingan code_generator.py kamu
         builder.jalankan_build(filepath, output_file)
         
         print("\n>>> HASIL EKSEKUSI PROGRAM <<<")
         try:
-            # Gunakan os.system agar dieksekusi sebagai script independen
+            # Menggunakan os.system (Revisi anti-error eksekusi)
             os.system(f"python {output_file}")
         except Exception as e:
              print(f"Gagal menjalankan output: {e}")
